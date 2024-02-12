@@ -1,8 +1,7 @@
 let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 // Fetch data and log to console
-d3.json(url).then(function (leaflet) {
-    console.log(leaflet);
-});
+d3.json(url).then(function (data) {
+
 
 //Map that plots all the earthquake from dataset based on their longitude and latitude
 let streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -19,13 +18,13 @@ let baseMaps = {
     "streets": streets
 };
 
-let earthquake_data = newL.LayerGroup();
-let tectonics = newL.LayerGroup();
+//let earthquake_data = newL.LayerGroup();
+//let tectonics = newL.LayerGroup();
 
-let overlays = {
-    "Earthquakes": earthquake_data,
-    "Tectonic Plates": tectonics   
-};
+//let overlays = {
+//    "Earthquakes": earthquake_data,
+ //   "Tectonic Plates": tectonics   
+//};
 
 L.control.layers(baseMaps, overlays).addTo(myMap);
 
@@ -47,8 +46,11 @@ function chooseColor(depth) {
 };
 
 function chooseRadius(magnitude) {
-    return magnitude+5;
-};
-
+    if (magnitude == 0){
+        return 1;
+    }
+    return magnitude * 4
+}
+});
 
 
